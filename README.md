@@ -28,6 +28,58 @@ The web interface requires some additional packages:
 
 ## Running
 
+There are currently two ways to run the DeepQA chatbot application:
+ * Command Line
+ * Web Interface
+
+As an alternative, these methods have been dockerized:
+
+### Docker
+
+#### Prerequisites: 
+
+* Run the `data-dir.sh` script which will create the necessary folders that will be used as volumes when spinning up Docker.
+
+```sh
+cd docker
+./data-dir.sh
+```
+
+The `~/deepQA/logs` contains the logs.
+The `~/deepQA/train` contains the conversation corpuses in .txt format.
+The `~/deepQA/model` contains the final model that is generated once the training is complete. 
+
+* Move the data (i.e. watson_pii.txt) to `~/deepQA/train`.
+
+##### Note:
+- must build *af.cds.bns:5001/cmo/deepqa* image first since compose build doesn't work behind the proxy yet:
+
+```sh
+docker build -t af.cds.bns:5001/cmo/deepqa .
+# must be logged in to push to the repo
+docker push af.cds.bns:5001/cmo/deepqa
+```
+
+#### Train the Model:
+* Creates a `dataset-MAXLENGTH.pkl` file with a tag based on the `--maxLength` specified (i.e. dataset-15.pkl). The dataset .pkl file will be in the `~/deepQA/model`.
+* The program will load the dataset and start training, dnce the dataset .pkl file is created. 
+* The trained model file will be created inside the `~/deepQA/model`.
+
+```sh
+docker-compose -f docker/train.yml up
+```
+
+##### Note:
+- to change the conversation corpus to use for training, modify the argument `--corpus <fileName>` in the commad within `train.yml`
+
+#### To Launch Web Interface:
+
+Once trained, it's possible to chat with the trained model using a web interface.
+
+```sh
+docker-compose -f docker/docker-compose.yml up
+```
+
 ### Chatbot
 
 To train the model, simply run `main.py`. Once trained, you can test the results with `main.py --test` (results generated in 'save/model/samples_predictions.txt') or `main.py --test interactive` (more fun).
