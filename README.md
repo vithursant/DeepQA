@@ -49,7 +49,7 @@ The `~/deepqa/logs` contains the logs.
 The `~/deepqa/train` contains the conversation corpuses in .txt format.
 The `~/deepqa/model` contains the final model that is generated once the training is complete. 
 
-* Move the data (i.e. watson_pii.txt) to `~/deepQA/train`.
+* Move the data (i.e. watson_pii.txt) to `~/deepqa/train`.
 
 ##### Note:
 - must build *deepqa* image first:
@@ -59,9 +59,9 @@ docker build -t deepqa .
 ```
 
 #### Train the Model:
-* Creates a `dataset-MAXLENGTH.pkl` file with a tag based on the `--maxLength` specified (i.e. dataset-15.pkl). The dataset .pkl file will be in the `~/deepQA/model`.
+* Creates a `dataset-MAXLENGTH.pkl` file with a tag based on the `--maxLength` specified (i.e. dataset-15.pkl). The dataset .pkl file will be in the `~/deepqa/model`.
 * The program will load the dataset and start training, dnce the dataset .pkl file is created. 
-* The trained model file will be created inside the `~/deepQA/model`.
+* The trained model file will be created inside the `~/deepqa/model`.
 
 ```sh
 docker-compose -f docker/train.yml up
