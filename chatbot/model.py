@@ -84,8 +84,10 @@ class Model:
         # Define the network
         # Here we use an embedding model, it takes integer as input and convert them into word vector for
         # better word representation
-        # decoderOutputs, states = tf.nn.seq2seq.embedding_rnn_seq2seq(
-        decoderOutputs, states = tf.nn.seq2seq.embedding_attention_seq2seq(
+        #decoderOutputs, states = tf.nn.seq2seq.embedding_rnn_seq2seq(
+        #decoderOutputs, states = tf.nn.seq2seq.embedding_attention_seq2seq(
+
+        decoderOutputs, states = tf.nn.seq2seq.embedding_rnn_seq2seq(
             self.encoderInputs,  # List<[batch=?, inputDim=1]>, list of size args.maxLength
             self.decoderInputs,  # For training, we force the correct output (feed_previous=False)
             encoDecoCell,

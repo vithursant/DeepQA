@@ -26,6 +26,7 @@ import pickle  # Saving the data
 import math  # For float comparison
 import os  # Checking file existance
 import random
+import multiprocessing
 
 from chatbot.cornelldata import CornellData
 
@@ -52,6 +53,7 @@ class TextData:
         """
         # Model parameters
         self.args = args
+        self.cores = self.args.cores
 
         # Path variables
         self.corpusDir = os.path.join(self.args.rootDir, 'train/')
@@ -277,18 +279,78 @@ class TextData:
             self.extractConversation(conversation)
 
         # The dataset will be saved in the same order it has been extracted
+    '''
+    def createTrainingSamples(self, 
+                                conversation, 
+                                id,
+                                inputWords,
+                                targetWords):
 
+        for i in range(len(conversation) - 1):
+            #print ("Input Line: ")
+            inputLine = (conversation[i])
+            #print (inputLine)
+            #print ("Target Line: ")
+            targetLine = (conversation[i+1])
+            #print (targetLine)
+
+            if ("A: " in inputLine):
+                inputLine = inputLine.replace("A: ", '')
+            if ("A: " in targetLine):
+                targetLine = targetLine.replace('A: ','')
+            if ("B: " in inputLine):
+                inputLine = inputLine.replace('B: ', '')
+            if ("B: " in targetLine):
+                targetLine = targetLine.replace('B: ','')
+            if ("C: " in inputLine):
+                inputLine = inputLine.replace('C: ', '')
+            if ("C: " in targetLine):
+                targetLine = targetLine.replace('C: ','')
+
+            #inputLine = inputLine.strip()
+            #targetLine = targetLine.strip()
+
+            #print ("Extracting inputLine: ")
+            inputWords = self.extractText(inputLine)
+            #print ("Input Words: ")
+            #print (inputWords)
+
+            #print("Extracting targetLine: ")
+            targetWords = self.extractText(targetLine, True)
+            #print ("Target Words: ")
+            #print (targetWords)
+
+            if inputWords and targetWords:
+                self.trainingSamples.append([inputWords, targetWords])
+'''
     def extractConversation(self, conversation):
         """Extract the sample lines from the conversations
         Args:
             conversation (Obj): a convesation object containing the lines to extract
         """
- 
+        '''
+        procs = self.args.cores   # Number of processes to create
+        jobs = []
+
+        for i in range(0, procs):
+            inputWords = list()
+            targetWords = list()
+            process = multiprocessing.Process(target=self.createTrainingSamples,
+                                                args=(conversations, i, inputWords, targetWords))
+            jobs.append(process)
+
+        for j in jobs:
+            j.start()
+
+        for j in jobs:
+            j.join()      
+        '''
         #print ('')
         #print ('')
         #conversation = {'lines': [{'i am still with you mister Shill thank you so much. so i have a question so do you have any type of insurance with scotiabank then a life insurance\n','A: '}, {'B: ', 'yes we do\n'}]}
         #print (conversation)
         # Iterate over all the lines of the conversation
+        
         for i in range(len(conversation) - 1):
             #print ("Input Line: ")
             inputLine = (conversation[i])
@@ -332,6 +394,7 @@ class TextData:
 
             #if i == 2:
             #    exit()
+
         '''
         for i in range(len(conversation["lines"]) - 1):  # We ignore the last line (no answer for it)
             inputLine  = conversation["lines"][i]

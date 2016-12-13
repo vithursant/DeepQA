@@ -46,6 +46,7 @@ def ws_receive(message):
     # Compute the prediction
     question = data['message']
     try:
+        logger.info('Hello my name is Vithu!')
         answer = ChatbotManager.callBot(question)
     except:  # Catching all possible mistakes
         logger.error('{}: Error with this question {}'.format(clientName, question))

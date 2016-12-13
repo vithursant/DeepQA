@@ -1,5 +1,5 @@
 #!/bin/bash
 
-mkdir -p ~/deepQA/logs
-mkdir -p ~/deepQA/model
-mkdir -p ~/deepQA/train
+mkdir -p ~/deepqa/logs
+mkdir -p ~/deepqa/model
+mkdir -p ~/deepqa/train

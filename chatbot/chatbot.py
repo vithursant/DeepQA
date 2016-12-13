@@ -102,6 +102,7 @@ class Chatbot:
         globalArgs.add_argument('--watsonMode', action='store_true', help='Inverse the questions and answer when training (the network try to guess the question)')
         globalArgs.add_argument('--device', type=str, default=None, help='\'gpu\' or \'cpu\' (Warning: make sure you have enough free RAM), allow to choose on which hardware run the model')
         globalArgs.add_argument('--seed', type=int, default=None, help='random seed for replication')
+        globalArgs.add_argument('--cores', type=int, default=None, help='CPU cores')
 
         # Dataset options
         datasetArgs = parser.add_argument_group('Dataset options')

@@ -22,9 +22,11 @@ class ChatbotManager:
         Should be called only once
         """
         if not ChatbotManager.bot:
-            logger.info('Initializing bot...')
+            logger.info('Initializing bot akjsdfkajsdhkf...')
             ChatbotManager.bot = chatbot.Chatbot()
-            ChatbotManager.bot.main(['--modelTag', 'server', '--test', 'daemon', '--rootDir', chatbotPath])
+            #print (chatbotPath)
+            #exit()
+            ChatbotManager.bot.main(['--test', 'daemon', '--rootDir', chatbotPath])
         else:
             logger.info('Bot already initialized.')
 
