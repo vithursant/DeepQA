@@ -45,19 +45,17 @@ cd docker
 ./data-dir.sh
 ```
 
-The `~/deepQA/logs` contains the logs.
-The `~/deepQA/train` contains the conversation corpuses in .txt format.
-The `~/deepQA/model` contains the final model that is generated once the training is complete. 
+The `~/deepqa/logs` contains the logs.
+The `~/deepqa/train` contains the conversation corpuses in .txt format.
+The `~/deepqa/model` contains the final model that is generated once the training is complete. 
 
 * Move the data (i.e. watson_pii.txt) to `~/deepQA/train`.
 
 ##### Note:
-- must build *af.cds.bns:5001/cmo/deepqa* image first since compose build doesn't work behind the proxy yet:
+- must build *deepqa* image first:
 
 ```sh
-docker build -t af.cds.bns:5001/cmo/deepqa .
-# must be logged in to push to the repo
-docker push af.cds.bns:5001/cmo/deepqa
+docker build -t deepqa .
 ```
 
 #### Train the Model:
